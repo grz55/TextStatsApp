@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+
+    <title>Text Stats App</title>
+</head>
+
+<body>
+    <h1>Text Stats App</h1>
+    <h3>Welcome</h3>
+    <h5>Created by Grzegorz Nowakowski</h5>
+
+    <form action="#" id="statsForm" th:action="@{/}" th:object="${textAnalyzer}" method="post">
+        <textarea id="textArea" th:field="*{longText}" cols="40" rows="5"></textarea><br>
+        <span th:if="${#fields.hasErrors('longText')}" th:errors="*{longText}"></span><br>
+        <input class="MyButton" type="submit" value="Show stats">
+        <input class="MyButton" type="button" value="Clear" onclick="javascript:eraseText();">
+    </form>
+
+    <br><br><br>
+    <div th:if="${textAnalyzer.longText}">
+        <table id="resultsTable">
+            <tr>
+                <td>
+                    Words count
+                </td>
+                <td th:text="${wordsCount}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Lines count
+                </td>
+                <td th:text="${linesCount}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Characters count
+                </td>
+                <td th:text="${charactersCount}">
+                </td>
+            </tr>
+        </table>
+    </div><br><br><br>
+
+</body>
+
+</html>
