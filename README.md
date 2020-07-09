@@ -8,3 +8,7 @@ Used: Java, Spring Boot, Thymeleaf, HTML, CSS.
 Project doesn't use any database.
 
 Static html, css, js files are in Resources folder.
+
+TODO:
+- counting methods efficiency
+- separate data holder from data analyzer
