@@ -1,45 +1,52 @@
 package com.grz55.SpringTextStats;
 
+import org.springframework.stereotype.Component;
+
 import javax.validation.constraints.NotNull;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class TextAnalyzer {
+
+    private static final String NEW_LINE = "\n";
+    private static final String EMPTY_STRING = "";
+    private static final String CARRIAGE_RETURN = "\r";
+    private static final String SPACE = " ";
+    private static final String[] FORBIDDEN_CHARS = {".", ",", ";", "!", "?"};
+    private static final String SPACE_REGEX = "\\s+";
 
     @NotNull
     private String longText;
+    private String tempLongText;
+    private Pattern p;
 
-    public int getCharactersCount(){
-        String tempLongText = longText;
-        tempLongText = tempLongText.replace("\n", "").replace("\r", "").replace(" ","");
+    public TextAnalyzer() {
+        p = Pattern.compile(NEW_LINE);
+    }
+
+    public int getCharactersCount() {
+        tempLongText = longText.replace(NEW_LINE, EMPTY_STRING).replace(CARRIAGE_RETURN, EMPTY_STRING).replace(SPACE, EMPTY_STRING);
         return tempLongText.length();
     }
 
-
     public int getWordsCount() {
-        String tempLongText = longText;
-        char[] forbiddenChars = {'.',',',';','!','?'};
-        for(int i=0;i<forbiddenChars.length;i++)
-            tempLongText = tempLongText.replace(forbiddenChars[i],' ');
-
-        tempLongText = tempLongText.trim();
-        if (tempLongText.isEmpty())
+        for (int i = 0; i < FORBIDDEN_CHARS.length; i++) {
+            tempLongText = longText.replace(FORBIDDEN_CHARS[i], SPACE);
+        }
+        if (tempLongText.isEmpty()) {
             return 0;
-        return tempLongText.split("\\s+").length;
+        } else {
+            return tempLongText.split(SPACE_REGEX).length;
+        }
     }
 
-    public int getLinesCount(){
-        if(longText.equals("")){
+    public int getLinesCount() {
+        tempLongText = longText.trim();
+        if (tempLongText.isEmpty()) {
             return 0;
         }
-        String tempLongText = longText;
-        tempLongText = tempLongText.trim();
-        if(tempLongText.equals("")){
-            return 0;
-        }
-
         int count = 1;
-        Pattern p = Pattern.compile("\n");
         Matcher m = p.matcher(tempLongText);
         while (m.find()) {
             count++;

@@ -12,15 +12,15 @@ import javax.validation.Valid;
 public class StatsController implements WebMvcConfigurer {
 
     @GetMapping("/")
-    public String getForm(TextAnalyzer textAnalyzer){
+    public String getForm(TextAnalyzer textAnalyzer) {
         return "index";
     }
 
     @PostMapping("/")
-    public String getStats(Model model, @Valid TextAnalyzer textAnalyzer){
-        model.addAttribute("wordsCount",textAnalyzer.getWordsCount());
-        model.addAttribute("linesCount",textAnalyzer.getLinesCount());
-        model.addAttribute("charactersCount",textAnalyzer.getCharactersCount());
+    public String getStats(Model model, @Valid TextAnalyzer textAnalyzer) {
+        model.addAttribute("wordsCount", textAnalyzer.getWordsCount());
+        model.addAttribute("linesCount", textAnalyzer.getLinesCount());
+        model.addAttribute("charactersCount", textAnalyzer.getCharactersCount());
         return "index";
     }
 }
